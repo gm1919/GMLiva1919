@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="GMLiva — your personal social media and content assistant." />
+  <title>GMLiva — Personal Social Media & Content Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --green:#174b3a; --green2:#2d6a55; --mint:#eaf5ee; --pink:#f6dfe5;
+      --pink2:#fff2f5; --cream:#fffaf6; --ink:#19332a; --muted:#66766e;
+      --line:#dfe9e2; --white:#fff; --shadow:0 18px 55px rgba(23,75,58,.10);
+      --radius:24px;
+    }
+    *{box-sizing:border-box;scroll-behavior:smooth}
+    body{margin:0;font-family:"DM Sans",Arial,sans-serif;color:var(--ink);background:var(--cream);line-height:1.55}
+    a{text-decoration:none;color:inherit}
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer}
+    .container{width:min(1120px,92%);margin:auto}
+    .nav{position:sticky;top:0;z-index:20;background:rgba(255,250,246,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(223,233,226,.8)}
+    .nav-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.03em;font-size:1.25rem}
+    .logo{width:58px;height:58px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:.68rem;font-weight:800;letter-spacing:-.04em;box-shadow:0 8px 20px rgba(23,75,58,.16);white-space:nowrap}
+    .nav-links{display:flex;gap:22px;color:#53645d;font-size:.93rem}
+    .nav-links a:hover{color:var(--green)}
+    .nav-cta,.primary{border:0;background:var(--green);color:#fff;padding:12px 18px;border-radius:999px;font-weight:700;box-shadow:0 8px 18px rgba(23,75,58,.16)}
+    .nav-cta:hover,.primary:hover{background:#0f3d2e;transform:translateY(-1px)}
+    .hero{padding:82px 0 70px;background:radial-gradient(circle at 82% 18%,#f6dfe5 0,rgba(246,223,229,.55) 18%,transparent 42%),linear-gradient(145deg,#fffaf6 0%,#eef7f0 100%)}
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:55px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--line);border-radius:999px;color:var(--green);font-weight:700;font-size:.78rem}
+    h1,h2,h3{margin:0;line-height:1.1}
+    h1{font-family:"Playfair Display",serif;font-size:clamp(3rem,6vw,5.25rem);letter-spacing:-.055em;margin:20px 0 18px}
+    h1 span{color:var(--green2)}
+    .hero p{font-size:1.08rem;color:var(--muted);max-width:620px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .secondary{border:1px solid var(--line);background:#fff;color:var(--green);padding:12px 18px;border-radius:999px;font-weight:700}
+    .hero-note{display:flex;gap:14px;align-items:center;margin-top:22px;color:#607068;font-size:.88rem}
+    .hero-note b{color:var(--green)}
+    .hero-card{background:#fff;border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:var(--shadow);transform:rotate(1.3deg)}
+    .mock-top{display:flex;justify-content:space-between;align-items:center;padding:6px 5px 14px}
+    .mock-dot{width:9px;height:9px;border-radius:50%;background:#e8b9c4;display:inline-block;margin-right:5px}
+    .mock-photo{height:330px;border-radius:22px;overflow:hidden;position:relative;background:linear-gradient(145deg,#cbe6d5,#f4d8df)}
+    .mock-photo:after{content:"GMLiva";position:absolute;left:18px;bottom:16px;color:#fff;font-weight:700;font-size:1.4rem;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+    .mock-result{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+    .mini{background:var(--mint);border-radius:15px;padding:12px;font-size:.78rem}.mini.pink{background:var(--pink2)}
+    section{padding:82px 0}
+    .section-head{max-width:720px;margin-bottom:34px}
+    .section-kicker{text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;font-weight:800;color:var(--green2);margin-bottom:10px}
+    h2{font-family:"Playfair Display",serif;font-size:clamp(2.1rem,4vw,3.35rem);letter-spacing:-.04em}
+    .section-head p{color:var(--muted);margin:13px 0 0}
+    .studio{background:#f4faf5}
+    .studio-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 8px 30px rgba(23,75,58,.05)}
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+    .tab{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:999px;color:#607068;font-weight:700}
+    .tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+    label{display:block;font-size:.82rem;font-weight:800;margin-bottom:8px}
+    textarea,input,select{width:100%;border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px 14px;outline:none;color:var(--ink)}
+    textarea:focus,input:focus,select:focus{border-color:#8bb8a3;box-shadow:0 0 0 4px rgba(139,184,163,.14)}
+    .field{margin-bottom:16px}
+    .upload{border:1.5px dashed #a7c6b4;background:#f9fcfa;border-radius:19px;padding:22px;text-align:center}
+    .upload input{display:none}
+    .upload-label{display:inline-block;padding:11px 15px;background:var(--pink2);border:1px solid #f0ccd5;border-radius:999px;color:#6f4050;font-weight:800}
+    .thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
+    .thumb{aspect-ratio:1/1;overflow:hidden;border-radius:15px;border:2px solid transparent;background:#edf3ef;position:relative}
+    .thumb img{width:100%;height:100%;object-fit:cover}.thumb.selected{border-color:var(--green)}
+    .thumb small{position:absolute;left:7px;bottom:7px;background:#fff;padding:4px 7px;border-radius:999px;font-weight:800;font-size:.65rem}
+    .result{min-height:100%;background:linear-gradient(145deg,#fff,#f8fbf8)}
+    .result-empty{display:grid;place-items:center;min-height:350px;text-align:center;color:#738179}
+    .result-content{display:none}.result-content.show{display:block}
+    .result-photo{width:100%;height:245px;object-fit:cover;border-radius:19px;margin-bottom:18px}
+    .result-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .result-box{background:var(--mint);padding:14px;border-radius:16px}.result-box.pink{background:var(--pink2)}
+    .result-box strong{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#5f7068;margin-bottom:4px}
+    .idea{background:#fff}
+    .flow{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 25px}
+    .flow span{padding:9px 12px;border-radius:999px;background:var(--mint);font-size:.78rem;font-weight:800}.flow i{font-style:normal;align-self:center;color:#a0aaa5}
+    .idea-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:22px}
+    .idea-output{background:var(--green);color:#fff;border-radius:var(--radius);padding:27px;min-height:360px}
+    .idea-output .label{color:#bfe1ce;text-transform:uppercase;font-size:.7rem;letter-spacing:.1em;font-weight:800}
+    .idea-output h3{font-family:"Playfair Display",serif;font-size:2rem;margin:8px 0 18px}
+    .output-item{padding:13px 0;border-top:1px solid rgba(255,255,255,.18)}.output-item b{display:block;font-size:.76rem;color:#c5e5d1;margin-bottom:3px;text-transform:uppercase;letter-spacing:.06em}
+    .poses{background:#fdf3f5}
+    .pose-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .pose-card{background:#fff;border:1px solid #f0dfe3;border-radius:22px;overflow:hidden;box-shadow:0 8px 28px rgba(90,55,65,.07)}
+    .pose-card img{width:100%;height:390px;object-fit:cover;display:block}.pose-body{padding:18px}.pose-body h3{font-size:1.1rem}.pose-body p{color:var(--muted);font-size:.9rem;margin:7px 0 0}
+    .audience{background:#fff}
+    .audience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .aud-card{border:1px solid var(--line);border-radius:20px;padding:21px;background:linear-gradient(150deg,#fff,#f7fbf8)}
+    .aud-icon{width:38px;height:38px;border-radius:12px;background:var(--pink);display:grid;place-items:center;margin-bottom:14px}.aud-card h3{font-size:1.05rem}.aud-card p{font-size:.86rem;color:var(--muted);margin-bottom:0}
+    .planner{background:var(--mint)}
+    .planner-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:22px}
+    .planner-list{display:grid;gap:10px}.plan{background:#fff;border:1px solid var(--line);border-radius:17px;padding:16px;display:flex;justify-content:space-between;gap:12px}.plan small{color:var(--muted)}.pill{padding:6px 9px;background:var(--pink2);border-radius:999px;font-size:.7rem;font-weight:800;color:#704454;height:max-content}
+    .trust{padding:34px 0;background:var(--green);color:#fff}.trust-inner{display:flex;align-items:center;justify-content:space-between;gap:25px}.trust h2{font-size:2rem}.trust p{margin:7px 0 0;color:#c7dfd2}.trust-badge{background:#fff;color:var(--green);border-radius:999px;padding:12px 17px;font-weight:800;white-space:nowrap}
+    footer{padding:38px 0;background:#123b2e;color:#cfe0d7}.footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer-brand{color:#fff;font-weight:800}.footer-note{font-size:.82rem;max-width:600px}
+    .toast{position:fixed;right:18px;bottom:18px;background:var(--green);color:#fff;padding:13px 17px;border-radius:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s;z-index:50}.toast.show{opacity:1;transform:none}
+    @media(max-width:850px){
+      .nav-links{display:none}.hero-grid,.studio-grid,.idea-grid,.planner-grid{grid-template-columns:1fr}.hero{padding-top:55px}.hero-card{max-width:520px;margin:auto}
+      .pose-grid,.audience-grid{grid-template-columns:1fr 1fr}.pose-card img{height:330px}.trust-inner{align-items:flex-start;flex-direction:column}
+    }
+    @media(max-width:560px){
+      section{padding:62px 0}.pose-grid,.audience-grid,.result-row{grid-template-columns:1fr}.thumbs{grid-template-columns:repeat(3,1fr)}
+      .hero-actions{flex-direction:column}.hero-actions button{width:100%}.mock-photo{height:260px}.pose-card img{height:390px}
+    }
+  </style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="#home"><span class="logo">GMLiva</span><span>GMLiva</span></a>
+    <nav class="nav-links">
+      <a href="#studio">Photo Studio</a><a href="#idea">Idea → Content</a><a href="#poses">Pose Studio</a><a href="#audience">Who It's For</a>
+    </nav>
+    <a class="nav-cta" href="#studio">Try GMLiva</a>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">Personal social media & content assistant</span>
+      <h1>From a simple idea to <span>content that feels like you.</span></h1>
+      <p>GMLiva helps you choose the right photo, shape an idea, write natural captions, find the right mood, and organise your next post — all while keeping the final decision in your hands.</p>
+      <div class="hero-actions">
+        <button class="primary" onclick="document.querySelector('#studio').scrollIntoView()">Start with a Photo →</button>
+        <button class="secondary" onclick="document.querySelector('#idea').scrollIntoView()">Build from an Idea</button>
+      </div>
+      <div class="hero-note"><b>✓ User controlled</b><span>Nothing goes live without you.</span></div>
+    </div>
+    <div class="hero-card">
+      <div class="mock-top"><b>GMLiva Studio</b><span><i class="mock-dot"></i><i class="mock-dot"></i><i class="mock-dot"></i></span></div>
+      <div class="mock-photo"></div>
+      <div class="mock-result"><div class="mini"><b>Caption</b><br>Simple. Human. Yours.</div><div class="mini pink"><b>Music mood</b><br>Calm acoustic</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="studio" class="studio">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">Photo Studio</div>
+      <h2>Turn your photos into a ready-to-share content package.</h2>
+      <p>Upload one or several photos, select the strongest one, and use GMLiva's reliable demo analysis to build the content direction.</p>
+    </div>
+    <div class="studio-grid">
+      <div class="panel">
+        <div class="field">
+          <label>Choose your photos</label>
+          <div class="upload">
+            <input id="photoInput" type="file" accept="image/*" multiple />
+            <label class="upload-label" for="photoInput">＋ Upload 1–3 Photos</label>
+            <p style="margin:10px 0 0;color:#728078;font-size:.82rem">Your images stay in this browser demo.</p>
+          </div>
+          <div id="thumbs" class="thumbs"></div>
+        </div>
+        <button id="analyzeBtn" class="primary" style="width:100%">Analyse My Photos →</button>
+        <p style="font-size:.76rem;color:#75827d;margin:12px 0 0">Demo mode: works without paid AI/API credits.</p>
+      </div>
+      <div class="panel result">
+        <div id="resultEmpty" class="result-empty"><div><div style="font-size:2rem;margin-bottom:8px">✦</div><b>Your content package will appear here</b><br><span style="font-size:.85rem">Upload a photo and analyse it to begin.</span></div></div>
+        <div id="resultContent" class="result-content">
+          <img id="resultPhoto" class="result-photo" alt="Selected photo">
+          <div class="result-row">
+            <div class="result-box"><strong>Best photo</strong><span id="bestPhoto">Selected photo</span></div>
+            <div class="result-box pink"><strong>Content concept</strong><span id="concept">A natural personal moment.</span></div>
+          </div>
+          <div class="result-box" style="margin-top:12px"><strong>Caption options</strong><span id="captions"></span></div>
+          <div class="result-row" style="margin-top:12px">
+            <div class="result-box pink"><strong>Music direction</strong><span id="music"></span></div>
+            <div class="result-box"><strong>Hashtags</strong><span id="hashtags"></span></div>
+          </div>
+          <div class="result-box" style="margin-top:12px"><strong>Posting direction</strong><span id="posting"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="idea" class="idea">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">Idea-to-Content Studio</div>
+      <h2>Don't have a photo yet? Start with what you want to say.</h2>
+      <p>GMLiva connects the complete journey: <b>Idea → Concept → Photo Direction → Caption → Ready-to-Share Content.</b></p>
+    </div>
+    <div class="flow"><span>Idea</span><i>→</i><span>Concept</span><i>→</i><span>Photo Direction</span><i>→</i><span>Caption</span><i>→</i><span>Ready to Share</span></div>
+    <div class="idea-grid">
+      <div class="panel">
+        <div class="field"><label for="ideaInput">What do you want to post?</label><textarea id="ideaInput" rows="7" placeholder="Example: A calm, classy college evening post after rain."></textarea></div>
+        <div class="field"><label for="mood">Choose a mood</label><select id="mood"><option>Natural & calm</option><option>Confident & professional</option><option>Fun & energetic</option><option>Warm & personal</option></select></div>
+        <button class="primary" style="width:100%" onclick="buildIdea()">Build My Content →</button>
+        <div style="margin-top:17px;padding:14px;background:var(--pink2);border-radius:15px;font-size:.82rem;color:#6e5159"><b>Try:</b> “College evening after rain” · “My first project achievement” · “Small business product launch”</div>
+      </div>
+      <div class="idea-output" id="ideaOutput">
+        <div class="label">Your content direction</div>
+        <h3>Ready when your idea is.</h3>
+        <div class="output-item"><b>Concept</b><span id="ideaConcept">Enter an idea on the left and GMLiva will shape it.</span></div>
+        <div class="output-item"><b>Photo Direction</b><span id="ideaPhoto">A clear, natural photo that matches your story.</span></div>
+        <div class="output-item"><b>Caption</b><span id="ideaCaption">A simple caption will appear here.</span></div>
+        <div class="output-item"><b>Music Direction</b><span id="ideaMusic">A mood-based music direction will appear here.</span></div>
+        <div class="output-item"><b>Hashtags</b><span id="ideaTags">Relevant, focused hashtags — not a long list.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="poses" class="poses">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">Pose Studio</div>
+      <h2>One Photo, Multiple Possibilities.</h2>
+      <p>Explore three real pose examples for different content styles. These are reference photos for the demo; GMLiva does not claim to generate or transform these photos.</p>
+    </div>
+    <div class="pose-grid">
+      <article class="pose-card"><img src="assets/pose1.jpg" alt="Relaxed standing pose example"><div class="pose-body"><h3>Relaxed Standing</h3><p>Confident and composed natural look.</p></div></article>
+      <article class="pose-card"><img src="assets/pose2.jpg" alt="Walking candid pose example"><div class="pose-body"><h3>Walking / Candid</h3><p>Natural walking movement and candid vibe.</p></div></article>
+      <article class="pose-card"><img src="assets/pose3.jpg" alt="Seated over-the-shoulder pose example"><div class="pose-body"><h3>Seated / Over-the-Shoulder</h3><p>Calm and approachable look.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="audience" class="audience">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">Who it's for</div>
+      <h2>Built for every kind of creator.</h2>
+      <p>GMLiva is not limited to influencers. It acts like a personal content assistant for people who want to communicate better online.</p>
+    </div>
+    <div class="audience-grid">
+      <article class="aud-card"><div class="aud-icon">🎓</div><h3>Students</h3><p>Campus moments, personal branding, events, projects and achievements.</p></article>
+      <article class="aud-card"><div class="aud-icon">✦</div><h3>Content Creators</h3><p>Ideas, photo selection, captions, consistency and stories/reels planning.</p></article>
+      <article class="aud-card"><div class="aud-icon">💼</div><h3>Corporate Employees</h3><p>LinkedIn content, work achievements, professional photos and career updates.</p></article>
+      <article class="aud-card"><div class="aud-icon">🚀</div><h3>Entrepreneurs & Small Businesses</h3><p>Product posts, brand storytelling, promotion and customer engagement ideas.</p></article>
+      <article class="aud-card"><div class="aud-icon">🧩</div><h3>Freelancers & Professionals</h3><p>Portfolio presentation, personal branding and client-facing content.</p></article>
+      <article class="aud-card"><div class="aud-icon">＋</div><h3>Everyone Else</h3><p>Influencers, artists, photographers, teachers, researchers, job seekers and everyday users.</p></article>
+    </div>
+  </div>
+</section>
+
+<section id="planner" class="planner">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">Content Planner</div>
+      <h2>Keep good ideas from getting lost.</h2>
+      <p>A simple planning view for upcoming posts. Add your own idea and keep the next step visible.</p>
+    </div>
+    <div class="planner-grid">
+      <div class="panel">
+        <div class="field"><label for="planTitle">New content idea</label><input id="planTitle" placeholder="e.g. College project achievement"></div>
+        <div class="field"><label for="planDate">Planned date</label><input id="planDate" type="date"></div>
+        <button class="primary" style="width:100%" onclick="addPlan()">Add to Planner +</button>
+      </div>
+      <div id="plannerList" class="planner-list">
+        <div class="plan"><div><b>College evening after rain</b><br><small>Ready for caption + photo selection</small></div><span class="pill">Idea</span></div>
+        <div class="plan"><div><b>GMLiva project presentation</b><br><small>Professional personal-branding post</small></div><span class="pill">Draft</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="container trust-inner">
+    <div><h2>Nothing Goes Live Without You.</h2><p>Review the photo, content, aesthetic and caption before sharing. GMLiva suggests — you decide.</p></div>
+    <div class="trust-badge">User approval first ✓</div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div><div class="footer-brand">GMLiva</div><div class="footer-note">Personal Social Media & Content Assistant</div></div>
+    <div class="footer-note">Prototype note: this college demo uses browser-based fallback generation so the core experience works without paid API credits. Future versions can connect genuine AI services with user permission.</div>
+  </div>
+</footer>
+
+<div id="toast" class="toast">Done ✓</div>
+
+<script>
+  const photoInput = document.getElementById('photoInput');
+  const thumbs = document.getElementById('thumbs');
+  let photos = [];
+  let selected = 0;
+
+  photoInput.addEventListener('change', () => {
+    const files = Array.from(photoInput.files || []).filter(f => f.type.startsWith('image/')).slice(0,3);
+    photos = files.map(file => ({file, url: URL.createObjectURL(file)}));
+    selected = 0;
+    renderThumbs();
+    if(files.length) showToast(files.length + ' photo' + (files.length > 1 ? 's' : '') + ' added');
+  });
+
+  function renderThumbs(){
+    thumbs.innerHTML = '';
+    photos.forEach((p,i) => {
+      const div = document.createElement('div');
+      div.className = 'thumb' + (i===selected ? ' selected' : '');
+      div.innerHTML = `<img src="${p.url}" alt="Uploaded photo ${i+1}"><small>${i===selected?'Selected':'Photo '+(i+1)}</small>`;
+      div.onclick = () => { selected=i; renderThumbs(); };
+      thumbs.appendChild(div);
+    });
+  }
+
+  document.getElementById('analyzeBtn').addEventListener('click', () => {
+    if(!photos.length){ showToast('Please upload a photo first'); return; }
+    const p = photos[selected];
+    document.getElementById('resultEmpty').style.display='none';
+    document.getElementById('resultContent').classList.add('show');
+    document.getElementById('resultPhoto').src=p.url;
+    document.getElementById('bestPhoto').textContent=`Photo ${selected+1} selected as your strongest starting point.`;
+    document.getElementById('concept').textContent='Natural personal-branding moment with a clean, authentic feel.';
+    document.getElementById('captions').innerHTML='<br>1. “Keeping it simple, keeping it real.”<br>2. “A moment worth remembering.”<br>3. “Just another chapter in the journey.”';
+    document.getElementById('music').textContent='Calm acoustic / soft instrumental — choose a track that supports the mood without overpowering the photo.';
+    document.getElementById('hashtags').textContent='#GMLiva #PersonalBranding #EverydayMoments #ContentIdeas';
+    document.getElementById('posting').textContent='Best direction: post when your audience is active. For the demo, present this as a suggested timing direction rather than a guaranteed “best time”.';
+    showToast('Content package ready ✓');
+  });
+
+  function buildIdea(){
+    const raw = document.getElementById('ideaInput').value.trim();
+    const mood = document.getElementById('mood').value;
+    if(!raw){ showToast('Enter an idea first'); return; }
+    const lower = raw.toLowerCase();
+    let concept = 'A simple, authentic story built around your moment.';
+    let photo = 'Use natural light, a clean environment, and a relaxed expression. Keep the original setting visible so the story feels genuine.';
+    let caption = '“Some moments do not need to be complicated — they just need to be lived.”';
+    let music = 'Soft acoustic or mellow instrumental.';
+    let tags = '#GMLiva #ContentIdea #PersonalStory';
+    if(lower.includes('rain') || lower.includes('evening')){
+      concept='A calm, reflective college-evening moment after the rain.';
+      photo='Walk through a naturally lit campus path or stand near a reflective surface. Keep the environment visible and avoid an over-posed look.';
+      caption='“After the rain, even an ordinary evening feels a little different.”';
+      music='Warm acoustic / lo-fi instrumental with a calm evening mood.';
+      tags='#CollegeLife #AfterTheRain #EveningMood #GMLiva';
+    } else if(lower.includes('project') || lower.includes('achievement') || lower.includes('presentation')){
+      concept='A confident personal-branding post that celebrates progress without feeling boastful.';
+      photo='Use a clean background, confident posture and one meaningful project detail in the frame.';
+      caption='“A small milestone, a lot of learning, and another step forward.”';
+      music='Light uplifting instrumental; for LinkedIn, music can be omitted.';
+      tags='#StudentJourney #Achievement #PersonalBranding #GMLiva';
+    } else if(lower.includes('business') || lower.includes('product')){
+      concept='A focused product/story post that shows value while keeping the human side of the brand visible.';
+      photo='Show the product clearly in natural light, with one lifestyle frame that explains how it fits into real life.';
+      caption='“Made to be useful, designed to fit into everyday moments.”';
+      music='Clean upbeat instrumental or subtle brand-friendly audio.';
+      tags='#SmallBusiness #BrandStory #ProductContent #GMLiva';
+    }
+    document.getElementById('ideaConcept').textContent=concept+' Mood: '+mood+'.';
+    document.getElementById('ideaPhoto').textContent=photo;
+    document.getElementById('ideaCaption').textContent=caption;
+    document.getElementById('ideaMusic').textContent=music;
+    document.getElementById('ideaTags').textContent=tags;
+    showToast('Idea turned into a content direction ✓');
+  }
+
+  function addPlan(){
+    const title=document.getElementById('planTitle').value.trim();
+    const date=document.getElementById('planDate').value;
+    if(!title){showToast('Add a content idea first');return;}
+    const list=document.getElementById('plannerList');
+    const item=document.createElement('div');
+    item.className='plan';
+    item.innerHTML=`<div><b>${escapeHtml(title)}</b><br><small>${date ? 'Planned for '+date : 'No date selected'}</small></div><span class="pill">Idea</span>`;
+    list.prepend(item);
+    document.getElementById('planTitle').value='';
+    showToast('Added to planner ✓');
+  }
+  function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
+  function showToast(msg){
+    const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+    clearTimeout(window.__toast); window.__toast=setTimeout(()=>t.classList.remove('show'),2200);
+  }
+  document.getElementById('planDate').valueAsDate = new Date();
+</script>
+</body>
+</html>
